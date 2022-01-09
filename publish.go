@@ -117,6 +117,18 @@ func (publisher *Publisher) handleRestarts() {
 	}
 }
 
+func (publisher Publisher) checkQueueWorker(queueName string) bool {
+	queueInfo, err := publisher.chManager.channel.QueueInspect(queueName)
+	if err != nil {
+		return false
+	}
+	if queueInfo.Consumers > 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
 // NotifyReturn registers a listener for basic.return methods.
 // These can be sent from the server when a publish is undeliverable either from the mandatory or immediate flags.
 func (publisher *Publisher) NotifyReturn() <-chan Return {
@@ -168,6 +180,16 @@ func (publisher *Publisher) Publish(
 		message.Type = options.Type
 		message.UserId = options.UserID
 		message.AppId = options.AppID
+
+		// 针对 routingKey 需要做一次判断
+		if v, ok := options.Headers["base_queue"]; ok && v != ""{
+			if publisher.checkQueueWorker(routingKey) == false {
+				// 期望发送消息的对应的 Queue 不存在，需要做一次尝试基准环境模式的消息发送基准
+				if publisher.checkQueueWorker(v.(string)) {
+					routingKey = v.(string)
+				}
+			}
+		}
 
 		// Actual publish.
 		err := publisher.chManager.channel.Publish(
