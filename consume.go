@@ -62,6 +62,7 @@ func NewConsumer(url string, config amqp.Config, optionFuncs ...func(*ConsumerOp
 	consumer := Consumer{
 		chManager: chManager,
 		logger:    options.Logger,
+		wg:        &sync.WaitGroup{},
 	}
 	return consumer, nil
 }
