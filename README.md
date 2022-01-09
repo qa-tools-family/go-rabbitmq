@@ -4,7 +4,7 @@ Wrapper of [rabbitmq/amqp091-go](https://github.com/rabbitmq/amqp091-go) that pr
 
 Supported by [Qvault](https://qvault.io)
 
-[![](https://godoc.org/github.com/wagslane/go-rabbitmq?status.svg)](https://godoc.org/github.com/wagslane/go-rabbitmq)![Deploy](https://github.com/wagslane/go-rabbitmq/workflows/Tests/badge.svg)
+[![](https://godoc.org/github.com/qa-tools-family/go-rabbitmq?status.svg)](https://godoc.org/github.com/qa-tools-family/go-rabbitmq)![Deploy](https://github.com/qa-tools-family/go-rabbitmq/workflows/Tests/badge.svg)
 
 ## Motivation
 
@@ -24,7 +24,7 @@ The goal with `go-rabbitmq` is to still provide most all of the nitty-gritty fun
 Inside a Go module:
 
 ```bash
-go get github.com/wagslane/go-rabbitmq
+go get github.com/qa-tools-family/go-rabbitmq
 ```
 
 ## 🚀 Quick Start Consumer
@@ -134,7 +134,7 @@ See the [examples](examples) directory for more ideas.
 
 ## 💬 Contact
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/wagslane.svg?label=Follow%20Wagslane&style=social)](https://twitter.com/intent/follow?screen_name=wagslane)
+[![Twitter Follow](https://img.shields.io/twitter/follow/qa-tools-family.svg?label=Follow%20qa-tools-family&style=social)](https://twitter.com/intent/follow?screen_name=qa-tools-family)
 
 Submit an issue (above in the issues tab)
 

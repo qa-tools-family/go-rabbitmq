@@ -9,7 +9,7 @@ import (
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
-	rabbitmq "github.com/wagslane/go-rabbitmq"
+	rabbitmq "github.com/qa-tools-family/go-rabbitmq"
 )
 
 func main() {
