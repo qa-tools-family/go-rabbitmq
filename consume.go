@@ -2,6 +2,7 @@ package rabbitmq
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -26,6 +27,7 @@ const (
 type Consumer struct {
 	chManager *channelManager
 	logger    Logger
+	wg *sync.WaitGroup
 }
 
 // ConsumerOptions are used to describe a consumer's configuration.
@@ -126,6 +128,11 @@ func (consumer Consumer) StartConsuming(
 func (consumer Consumer) Disconnect() {
 	consumer.chManager.channel.Close()
 	consumer.chManager.connection.Close()
+}
+
+// WaitMessageDown Waiting current processing message finished
+func (consumer Consumer) WaitMessageDown()  {
+	consumer.wg.Wait()
 }
 
 // StopConsuming stops the consumption of messages.
@@ -254,7 +261,9 @@ func (consumer Consumer) startGoroutines(
 	}
 
 	for i := 0; i < consumeOptions.Concurrency; i++ {
+		consumer.wg.Add(1)
 		go func() {
+			defer consumer.wg.Done()
 			for msg := range msgs {
 				if consumeOptions.ConsumerAutoAck {
 					handler(Delivery{msg})
